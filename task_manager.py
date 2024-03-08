@@ -109,33 +109,33 @@ def add_task():
         except ValueError:
             print("Invalid datetime format. Please use the format specified")
 
-        # Then get the current date.
-        curr_date = date.today()
-        ''' Add the data to the file task.txt and
-            Include 'No' to indicate if the task is complete.'''
-        new_task = {
-            "username": task_username,
-            "title": task_title,
-            "description": task_description,
-            "due_date": due_date_time,
-            "assigned_date": curr_date,
-            "completed": False
-        }
+    # Then get the current date.
+    curr_date = date.today()
+    ''' Add the data to the file task.txt and
+        Include 'No' to indicate if the task is complete.'''
+    new_task = {
+        "username": task_username,
+        "title": task_title,
+        "description": task_description,
+        "due_date": due_date_time,
+        "assigned_date": curr_date,
+        "completed": False
+    }
 
-        task_list.append(new_task)
-        with open("tasks.txt", "w") as task_file:
-            task_list_to_write = []
-            for t in task_list:
-                str_attrs = [
-                    t['username'],
-                    t['title'],
-                    t['description'],
-                    t['due_date'].strftime(DATETIME_STRING_FORMAT),
-                    t['assigned_date'].strftime(DATETIME_STRING_FORMAT),
-                    "Yes" if t['completed'] else "No"
-                ]
-                task_list_to_write.append(";".join(str_attrs))
-            task_file.write("\n".join(task_list_to_write))
+    task_list.append(new_task)
+    with open("tasks.txt", "w") as task_file:
+        task_list_to_write = []
+        for t in task_list:
+            str_attrs = [
+                t['username'],
+                t['title'],
+                t['description'],
+                t['due_date'].strftime(DATETIME_STRING_FORMAT),
+                t['assigned_date'].strftime(DATETIME_STRING_FORMAT),
+                "Yes" if t['completed'] else "No"
+            ]
+            task_list_to_write.append(";".join(str_attrs))
+        task_file.write("\n".join(task_list_to_write))
         print("Task successfully added.")
 
 
@@ -172,7 +172,9 @@ def view_mine():
             print(disp_str)
 
 
-
+# 5. Generate reports 
+def gen_reports():
+    with open("task_overview.txt", 'w') as file:
 
 
 
@@ -180,9 +182,9 @@ def view_mine():
 
 
 #====Login Section====
-'''This code reads usernames and password from the user.txt file to 
-    allow a user to login.
-'''
+        '''This code reads usernames and password from the user.txt file to 
+                allow a user to login.
+        '''
 # If no user.txt file, write one with a default account
 if not os.path.exists("user.txt"):
     with open("user.txt", "w") as default_file:
@@ -241,6 +243,9 @@ e - Exit
     elif menu == 'vm':
         view_mine()             
     
+    elif menu == 'gr':
+        gen_reports()
+
     elif menu == 'ds' and curr_user == 'admin': 
         '''If the user is an admin they can display statistics about number of users
             and tasks.'''
