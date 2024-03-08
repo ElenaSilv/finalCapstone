@@ -174,11 +174,63 @@ def view_mine():
 
 # 5. Generate reports 
 def gen_reports():
+    # Task overview report
+    today = date.today()
+    total_tasks = len(task_list)
+    completed_tasks = sum(task['completed'] for task in task_list)
+    uncompleted_tasks = total_tasks - completed_tasks
+    overdue_tasks = sum((task['due_date'].date() < today and not task['completed']) for task in task_list)
+    
+    if total_tasks > 0:
+        incomplete_tasks_percentage = (uncompleted_tasks / total_tasks) * 100
+        overdue_task_percentage = (overdue_tasks / total_tasks) * 100
+    else: 
+        incomplete_tasks_percentage = 0
+        overdue_task_percentage = 0
+
     with open("task_overview.txt", 'w') as file:
+        file.write("Task Overview Report\n\n")
+        file.write(f"Number of tasks generated and tracked: {total_tasks}\n")
+        file.write(f"Total number of complete tasks: {completed_tasks}\n")
+        file.write(f"Total number of uncompleted tasks: {uncompleted_tasks}\n")
+        file.write(f"Total number of overdue tasks: {overdue_tasks}\n")
+        file.write(f"Percentage of incomplete tasks: {incomplete_tasks_percentage}%\n")
+        file.write(f"Percentage of tasks overdue: {overdue_task_percentage}%\n")
+    
+    with open("user_overview.txt", 'w') as file:
+        file.write("User Overview Report\n\n")
+        file.write(f"Total number of users registered with task_manager: {len(username_password)}\n")
+        file.write(f"Total number of tasks generated and tracked using task_manager: {total_tasks}\n\n")
+        for user in username_password:
+            user_tasks = [task for task in task_list if task['username']==user]
+            num_user_tasks = len(user_tasks)
+            num_completed_tasks = sum(task['completed'] for task in user_tasks)
+            if num_user_tasks > 0:
+                tasks_assigned_percentage = (num_user_tasks / total_tasks) *100
+                task_completed_percentage = (num_completed_tasks / num_user_tasks) *100
+                task_uncompleted_percentage = ((num_user_tasks - num_completed_tasks) / num_user_tasks) *100
+                task_overdue_percentage = (sum((task['due_date'].date() < today and not task['completed']) for task in user_tasks) / num_user_tasks)*100
+            else:
+                tasks_assigned_percentage = 0
+                task_completed_percentage = 0
+                task_uncompleted_percentage = 0
+                task_overdue_percentage = 0
+        
 
+            file.write(f"User: {user}\n")
+            file.write(f"Percentage of tasks assigned to {user}: {tasks_assigned_percentage}%\n")
+            file.write(f"Percentage of tasks assigned and completed: {task_completed_percentage}%\n")
+            file.write(f"Percentage of tasks assigned and not completed: {task_uncompleted_percentage}%\n")
+            file.write(f"Percentage of tasks assigned and overdue: {task_overdue_percentage}%\n\n")
 
+    # Printing the reports after generating them
+    print("Task Overview Report:")
+    with open("task_overview.txt", 'r') as task_file:
+        print(task_file.read())
 
-
+    print("\nUser Overview Report:")
+    with open("user_overview.txt", 'r') as user_file:
+        print(user_file.read())    
 
 
 #====Login Section====

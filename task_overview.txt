@@ -1,0 +1,8 @@
+Task Overview Report
+
+Number of tasks generated and tracked: 3
+Total number of complete tasks: 0
+Total number of uncompleted tasks: 3
+Total number of overdue tasks: 1
+Percentage of incomplete tasks: 100.0%
+Percentage of tasks overdue: 33.33333333333333%

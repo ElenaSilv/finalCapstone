@@ -1,0 +1,23 @@
+User Overview Report
+
+Total number of users registered with task_manager: 3
+Total number of tasks generated and tracked using task_manager: 3
+
+User: admin
+Percentage of tasks assigned to admin: 33.33333333333333%
+Percentage of tasks assigned and completed: 0.0%
+Percentage of tasks assigned and not completed: 100.0%
+Percentage of tasks assigned and overdue: 100.0%
+
+User: elena
+Percentage of tasks assigned to elena: 66.66666666666666%
+Percentage of tasks assigned and completed: 0.0%
+Percentage of tasks assigned and not completed: 100.0%
+Percentage of tasks assigned and overdue: 0.0%
+
+User: eddy
+Percentage of tasks assigned to eddy: 0%
+Percentage of tasks assigned and completed: 0%
+Percentage of tasks assigned and not completed: 0%
+Percentage of tasks assigned and overdue: 0%
+
