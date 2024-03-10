@@ -46,9 +46,9 @@ def reg_user():
     '''Add a new user to the user.txt file'''
 
         # - Request input (new username)
-    new_username = input("New Username: ")
+    new_username = input("\n\nNew Username: ")
     while new_username in username_password.keys():
-        print("Username already exists. Please enter a different username.")
+        print("\nUsername already exists. Please enter a different username.")
         new_username = input("New username: ")
         if new_username not in username_password.keys():
             break
@@ -62,7 +62,7 @@ def reg_user():
         # - If they are the same, add them to the user.txt file,
         # - Otherwise you present a relevant message.
     if new_password == confirm_password:
-        print("New user added")
+        print("\nNew user added\n\n")
         username_password[new_username] = new_password
             
         with open("user.txt", "w") as out_file:
@@ -72,7 +72,7 @@ def reg_user():
             out_file.write("\n".join(user_data))
             
     else:
-        print("Passwords do no match")
+        print("\nPasswords do no match\n")
 
 
 # 2. Add a new task to task.txt
@@ -86,9 +86,9 @@ def add_task():
     '''
 
     # Request input (user assigned to task) 
-    task_username = input("Name of person assigned to task: ")
+    task_username = input("\n\nName of person assigned to task: ")
     while task_username not in username_password.keys():
-        task_username = input("User does not exist. Please enter a valid username: ")
+        task_username = input("\nUser does not exist. Please enter a valid username: ")
         if task_username in username_password.keys():
             break
 
@@ -107,7 +107,7 @@ def add_task():
             break
 
         except ValueError:
-            print("Invalid datetime format. Please use the format specified")
+            print("\nInvalid datetime format. Please use the format specified.")
 
     # Then get the current date.
     curr_date = date.today()
@@ -136,7 +136,7 @@ def add_task():
             ]
             task_list_to_write.append(";".join(str_attrs))
         task_file.write("\n".join(task_list_to_write))
-        print("Task successfully added.")
+        print("\nTask successfully added.\n")
 
 
 # 3. View all tasks listed in task.txt
@@ -147,7 +147,7 @@ def view_all():
     '''
     
     for t in task_list:
-        disp_str = f"Task: \t\t {t['title']}\n"
+        disp_str = f"\n\nTask: \t\t {t['title']}\n"
         disp_str += f"Assigned to: \t {t['username']}\n"
         disp_str += f"Date Assigned: \t {t['assigned_date'].strftime(DATETIME_STRING_FORMAT)}\n"
         disp_str += f"Due Date: \t {t['due_date'].strftime(DATETIME_STRING_FORMAT)}\n"
@@ -164,7 +164,7 @@ def view_mine():
     
     while True:
         print("\n\nYour Tasks: ")
-        for index, t in enumerate(task_list, 0):
+        for index, t in enumerate(task_list, 1):
             if t['username'] == curr_user:
                 print(f"{index}. Task: {t["title"]}")
 
@@ -204,15 +204,6 @@ def view_mine():
                     print("The task has been edited.")
         except (ValueError, IndexError):
             print("Invalid input. Please enter a valid task number.")
-
-
-
-            # disp_str = f"Task: \t\t {t['title']}\n"
-            # disp_str += f"Assigned to: \t {t['username']}\n"
-            # disp_str += f"Date Assigned: \t {t['assigned_date'].strftime(DATETIME_STRING_FORMAT)}\n"
-            # disp_str += f"Due Date: \t {t['due_date'].strftime(DATETIME_STRING_FORMAT)}\n"
-            # disp_str += f"Task Description: \n {t['description']}\n"
-            # print(disp_str)
 
 
 # 5. Generate reports 
@@ -302,13 +293,13 @@ while not logged_in:
     curr_user = input("Username: ")
     curr_pass = input("Password: ")
     if curr_user not in username_password.keys():
-        print("User does not exist")
+        print("\nUser does not exist\n")
         continue
     elif username_password[curr_user] != curr_pass:
-        print("Wrong password")
+        print("\nWrong password\n")
         continue
     else:
-        print("Login Successful!")
+        print("\nLogin Successful!\n\n")
         logged_in = True
 
 
@@ -316,14 +307,14 @@ while True:
     # presenting the menu to the user and 
     # making sure that the user input is converted to lower case.
     print()
-    menu = input('''Select one of the following Options below:
-r - Registering a user
-a - Adding a task
-va - View all tasks
-vm - View my task
-gr - Generate reports 
-ds - Display statistics
-e - Exit
+    menu = input('''Select one of the following options below:
+R - Registering a user
+A - Adding a task
+VA - View all tasks
+VM - View my task
+GR - Generate reports 
+DS - Display statistics
+E - Exit
 : ''').lower()
 
     if menu == 'r':

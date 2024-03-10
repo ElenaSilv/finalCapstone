@@ -1,3 +1,5 @@
 admin;password
 elena;silvestri
 eddy;kubis
+tester;tester1
+newtester;tester2
