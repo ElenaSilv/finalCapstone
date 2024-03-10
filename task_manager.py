@@ -267,6 +267,28 @@ def gen_reports():
         print(user_file.read())    
 
 
+# 6. View reports (only for admin)
+def display_stats():
+        if curr_user != "admin":
+            print("\nAccess denied. You need to be an admin to view statistics.")
+            return 
+
+        # Check if the files exist and if not generate reports.     
+        if not (os.path.exists("task_overview.txt") and os.path.exists("user_overview.txt")):
+            gen_reports()
+
+        # Read and display contents of task_overview.txt
+        with open("task_overview.txt") as task_file:
+            print(task_file.read())
+        
+        # Read and display contents of user_overview.txt
+        with open("user_overview.txt") as user_file:
+            print(user_file.read())
+
+
+
+
+
 #====Login Section====
         '''This code reads usernames and password from the user.txt file to 
                 allow a user to login.
@@ -332,16 +354,18 @@ E - Exit
     elif menu == 'gr':
         gen_reports()
 
-    elif menu == 'ds' and curr_user == 'admin': 
-        '''If the user is an admin they can display statistics about number of users
-            and tasks.'''
-        num_users = len(username_password.keys())
-        num_tasks = len(task_list)
+    elif menu == 'ds':
+        display_stats()
+        # menu == 'ds' and curr_user == 'admin': 
+        # '''If the user is an admin they can display statistics about number of users
+        #     and tasks.'''
+        # num_users = len(username_password.keys())
+        # num_tasks = len(task_list)
 
-        print("-----------------------------------")
-        print(f"Number of users: \t\t {num_users}")
-        print(f"Number of tasks: \t\t {num_tasks}")
-        print("-----------------------------------")    
+        # print("-----------------------------------")
+        # print(f"Number of users: \t\t {num_users}")
+        # print(f"Number of tasks: \t\t {num_tasks}")
+        # print("-----------------------------------")    
 
     elif menu == 'e':
         print('Goodbye!!!')
