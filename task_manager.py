@@ -161,15 +161,58 @@ def view_mine():
             format of Output 2 presented in the task pdf (i.e. includes spacing
             and labelling)
     '''
+    
+    while True:
+        print("\n\nYour Tasks: ")
+        for index, t in enumerate(task_list, 0):
+            if t['username'] == curr_user:
+                print(f"{index}. Task: {t["title"]}")
 
-    for t in task_list:
-        if t['username'] == curr_user:
-            disp_str = f"Task: \t\t {t['title']}\n"
-            disp_str += f"Assigned to: \t {t['username']}\n"
-            disp_str += f"Date Assigned: \t {t['assigned_date'].strftime(DATETIME_STRING_FORMAT)}\n"
-            disp_str += f"Due Date: \t {t['due_date'].strftime(DATETIME_STRING_FORMAT)}\n"
-            disp_str += f"Task Description: \n {t['description']}\n"
-            print(disp_str)
+        print("-1. Return to Main Menu")
+
+        task_choice = input("Enter the number of the task you want to select, or -1 to return to the main menu.")
+        if task_choice == "-1":
+            break
+        
+        try:
+            task_index = int(task_choice) - 1
+            selected_task = task_list[task_index]
+
+            print("\nSelected Task:")
+            print(f"Title: {selected_task['title']}")
+            print(f"Assigned to: {selected_task['username']}")
+            print(f"Due date: {selected_task['due_date'].strftime(DATETIME_STRING_FORMAT)}")
+            print(f"Description: {selected_task['description']}")
+            print(f"Completed: {'Yes' if selected_task['completed'] else 'No'}")
+
+            if not selected_task['completed']:
+                action = input("\nEnter 'C' to mark the task as complete, 'E' to edit the task, or any other key to cancel: " ).upper() 
+                if action == "C":
+                    selected_task['completed'] == True
+                    print("The task has been marked as complete.")
+                elif action == "E":
+                    new_username = input("Enter a new username or press Enter to keep the same: ")
+                    if new_username:
+                        selected_task['username'] = new_username
+
+                    new_due_date = input("Enter a new due date (YYYY-MM-DD) or press Enter to keep the same:")
+                    if new_due_date:
+                        try:
+                            selected_task['due_date'] = datetime.strptime(new_due_date, DATETIME_STRING_FORMAT)
+                        except ValueError:
+                            print("Invalid date format. Task due date remains unchanged.")
+                    print("The task has been edited.")
+        except (ValueError, IndexError):
+            print("Invalid input. Please enter a valid task number.")
+
+
+
+            # disp_str = f"Task: \t\t {t['title']}\n"
+            # disp_str += f"Assigned to: \t {t['username']}\n"
+            # disp_str += f"Date Assigned: \t {t['assigned_date'].strftime(DATETIME_STRING_FORMAT)}\n"
+            # disp_str += f"Due Date: \t {t['due_date'].strftime(DATETIME_STRING_FORMAT)}\n"
+            # disp_str += f"Task Description: \n {t['description']}\n"
+            # print(disp_str)
 
 
 # 5. Generate reports 
